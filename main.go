@@ -34,11 +34,14 @@ func main() {
 
 	app.Post("/api/messages", func(ctx *fiber.Ctx) error {
 		var data map[string]string
+		fmt.Println("Posting ...")
 
 		err := ctx.BodyParser(&data)
 		if err != nil {
+			fmt.Printf("Data: %v\nError: %v\n", data, err)
 			return err
 		}
+		fmt.Printf("Data: %v\n", data)
 
 		return pusherClient.Trigger("chat", "message", data)
 	})
